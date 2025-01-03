@@ -12,21 +12,27 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/products/**
-          filters:
-            - JwtAuthenticationFilter
+#          filters:
+#            - JwtAuthenticationFilter
 
         - id: order-service
           uri: lb://order-service
           predicates:
             - Path=/orders/**
-          filters:
-            - JwtAuthenticationFilter
+#          filters:
+#            - JwtAuthenticationFilter
 
         - id: user-service
           uri: lb://user-service
           predicates:
             - Path=/auth/**
 
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/cart/**
+#          filters:
+#            - JwtAuthenticationFilter
 
 
 eureka:

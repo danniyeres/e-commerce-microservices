@@ -32,11 +32,11 @@ public class ProductController {
     }
 
     @GetMapping("/get/{id}")
-    public ProductDto getProductById(@PathVariable Long id) {
+    public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/get/{name}")
+    @GetMapping("/getByName/{name}")
     public ProductDto getProductByName(@PathVariable String name) {
         return productService.getProductByName(name);
     }
