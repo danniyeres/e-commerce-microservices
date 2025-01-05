@@ -19,7 +19,8 @@ public class GatewayConfig {
 
                 .route("order-service", r -> r.path("/orders/**")
                         .uri("lb://order-service"))
-                .route("cart-service", r -> r.path("/carts/**")
+
+                .route("cart-service", r -> r.path("/cart/**")
                         .uri("lb://cart-service"))
 
                 .build();

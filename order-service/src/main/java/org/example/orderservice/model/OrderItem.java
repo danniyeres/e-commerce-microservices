@@ -1,18 +1,19 @@
-package org.example.cartservice.model;
+package org.example.orderservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-public class CartItem {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class OrderItem {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long productId;
@@ -20,8 +21,6 @@ public class CartItem {
     private double price;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
-    @JsonIgnore
-    private Cart cart;
-
+    @JoinColumn(name = "order_id")
+    private Order order;
 }

@@ -34,6 +34,10 @@ spring:
 #          filters:
 #            - JwtAuthenticationFilter
 
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment/**
 
 eureka:
   client:

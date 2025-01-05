@@ -1,8 +1,8 @@
 package org.example.cartservice.service;
 
+
 import org.example.cartservice.model.Cart;
-import org.example.cartservice.model.CartItem;
-import org.example.cartservice.model.ProductClient;
+import org.example.cartservice.feignClient.ProductClient;
 import org.example.cartservice.repository.CartRepository;
 import org.example.productservice.model.Product;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,11 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ProductClient productClient;
 
+
     public CartService(CartRepository cartRepository, ProductClient productClient) {
         this.cartRepository = cartRepository;
         this.productClient = productClient;
+
     }
 
     public Cart getCartByUserId(Long userId) {
@@ -25,6 +27,7 @@ public class CartService {
     }
 
     public Cart addItemToCart(Long userId, Long productId, int quantity) {
+
         Product product = productClient.getProductById(productId);
         if (product == null) {
             throw new RuntimeException("Product not found");
@@ -36,10 +39,9 @@ public class CartService {
             cart.setUserId(userId);
         }
 
-        cart.addItem(productId, quantity);
+        cart.addItem(productId, quantity, product.getPrice());
         return cartRepository.save(cart);
     }
-
 
     public void removeItemFromCart(Long userId, Long productId) {
         if (!cartRepository.existsByUserId(userId)) {
@@ -59,4 +61,3 @@ public class CartService {
         cartRepository.save(cart);
     }
 }
-

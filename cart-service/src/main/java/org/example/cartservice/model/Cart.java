@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import org.example.cartservice.feignClient.ProductClient;
+import org.example.productservice.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,7 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
 
-    public void addItem(Long productId, int quantity) {
+    public void addItem(Long productId, int quantity, double price) {
         for (CartItem cartItem : items) {
             if (cartItem.getProductId().equals(productId)) {
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
@@ -27,9 +30,11 @@ public class Cart {
             }
         }
 
+
         CartItem item = new CartItem();
         item.setProductId(productId);
         item.setQuantity(quantity);
+        item.setPrice(price);
         item.setCart(this);
         items.add(item);
     }

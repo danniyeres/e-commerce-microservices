@@ -38,4 +38,16 @@ public class AuthService {
         }
         return jwtService.generateToken(existingUser.getUsername());
     }
+
+    public User getUserById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public User getUserByUsername(String username) {
+        return repository.findByUsername(username);
+    }
+
+    public List<User> getAllUsers() {
+        return repository.findAll();
+    }
 }

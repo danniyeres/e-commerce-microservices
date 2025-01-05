@@ -1,9 +1,10 @@
-
+server:
+  port: 8085
 spring:
   application:
-    name: order-service
+    name: payment-service
   datasource:
-    url: jdbc:mysql://localhost:3306/orders
+    url: jdbc:mysql://localhost:3306/payments
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,10 +12,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-server:
-  port: 8082
-
 eureka:
   client:
     service-url:
