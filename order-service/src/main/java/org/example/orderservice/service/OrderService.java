@@ -44,7 +44,7 @@ public class OrderService {
                 .userId(userId)
                 .items(items)
                 .totalPrice(totalPrice)
-                .status("CREATED")
+                .status("PENDING")
                 .build();
 
         return orderRepository.save(order);

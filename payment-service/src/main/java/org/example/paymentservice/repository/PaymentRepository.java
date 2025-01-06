@@ -1,4 +1,8 @@
 package org.example.paymentservice.repository;
 
-public class PaymentRepository {
+import org.example.paymentservice.model.Payment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
+
 }
