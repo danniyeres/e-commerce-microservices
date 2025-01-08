@@ -23,6 +23,8 @@ public class GatewayConfig {
                 .route("cart-service", r -> r.path("/cart/**")
                         .uri("lb://cart-service"))
 
+                .route("payment-service", r -> r.path("/payments/**")
+                        .uri("lb://payment-service"))
                 .build();
     }
 }

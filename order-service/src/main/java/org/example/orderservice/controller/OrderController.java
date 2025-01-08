@@ -4,6 +4,8 @@ import org.example.orderservice.model.Order;
 import org.example.orderservice.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -23,4 +25,13 @@ public class OrderController {
         return orderService.updateOrderStatus(orderId, status);
     }
 
+    @GetMapping("/get/{orderId}")
+    public Order getOrderById(@PathVariable Long orderId) {
+        return orderService.getOrderById(orderId);
+    }
+
+    @GetMapping("/getByUser/{userId}")
+    public List<Order> getOrderByUserId(@PathVariable Long userId) {
+        return orderService.getOrderByUserId(userId);
+    }
 }

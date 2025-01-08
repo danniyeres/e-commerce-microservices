@@ -23,6 +23,9 @@ public class Payment {
     @Enumerated (EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTime = LocalDateTime.now();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id", referencedColumnName = "id")
+    private CardDetails cardDetails ;
 }

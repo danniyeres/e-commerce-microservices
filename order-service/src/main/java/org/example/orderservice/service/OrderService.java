@@ -36,17 +36,14 @@ public class OrderService {
             items.add(orderItem);
         }
 
-        double totalPrice = items.stream()
-                .mapToDouble(item -> item.getPrice() * item.getQuantity())
-                .sum();
+        double totalPrice = cartClient.getCartByUserId(userId).getTotalPrice();
 
         Order order = Order.builder()
                 .userId(userId)
                 .items(items)
                 .totalPrice(totalPrice)
-                .status("PENDING")
+                .status("CREATED")
                 .build();
-
         return orderRepository.save(order);
     }
 
@@ -65,4 +62,7 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    public List<Order> getOrderByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
 }
