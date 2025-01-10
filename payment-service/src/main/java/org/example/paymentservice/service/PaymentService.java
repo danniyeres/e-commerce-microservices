@@ -1,5 +1,7 @@
 package org.example.paymentservice.service;
 
+import org.example.paymentservice.kafka.PaymentProducer;
+import org.example.paymentservice.kafka.PaymentStatusMessage;
 import org.example.paymentservice.model.CardDetails;
 import org.example.paymentservice.model.Payment;
 import org.example.paymentservice.model.PaymentRequest;
@@ -13,9 +15,11 @@ import java.util.List;
 @Service
 public class PaymentService {
     private final PaymentRepository paymentRepository;
+    private final PaymentProducer paymentProducer;
 
-    public PaymentService(PaymentRepository paymentRepository) {
+    public PaymentService(PaymentRepository paymentRepository, PaymentProducer paymentProducer) {
         this.paymentRepository = paymentRepository;
+        this.paymentProducer = paymentProducer;
     }
 
     public Payment processPayment(Long userId, Long orderId, PaymentRequest paymentRequest) {
@@ -34,8 +38,15 @@ public class PaymentService {
             payment.setPaymentStatus(PaymentStatus.FAILED);
         }
 
-        return paymentRepository.save(payment);
+        payment = paymentRepository.save(payment);
 
+        PaymentStatusMessage message = new PaymentStatusMessage(
+                payment.getOrderId(), payment.getId(),  payment.getPaymentStatus().name()
+        );
+
+        paymentProducer.sendPaymentStatus("payment-status", message);
+
+        return payment;
     }
 
     public boolean processWithProvider(Long userId, Long orderId, double amount) {
