@@ -1,4 +1,4 @@
-package org.example.cartservice.kafka;
+package org.example.cartservice.kafkaConsumer;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;

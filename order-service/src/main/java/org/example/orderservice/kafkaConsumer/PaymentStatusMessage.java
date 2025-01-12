@@ -1,4 +1,4 @@
-package org.example.orderservice.kafka;
+package org.example.orderservice.kafkaConsumer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package org.example.paymentservice.kafka;
+package org.example.cartservice.kafkaProduser;
 
 
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaConfig {
+public class KafkaProducerConfig {
 
     @Bean
     public ProducerFactory<String, Object> producerFactory() {

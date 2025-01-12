@@ -4,6 +4,8 @@ import org.example.cartservice.model.Product;
 import org.example.cartservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
@@ -13,6 +15,7 @@ public class ProductService {
     }
 
     public Product getProductById(Long productId) {
-        return productRepository.findById(productId).orElseThrow();
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new NoSuchElementException("Product with ID " + productId + " not found"));
     }
 }

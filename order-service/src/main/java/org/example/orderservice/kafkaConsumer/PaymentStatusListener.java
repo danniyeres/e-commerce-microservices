@@ -1,4 +1,4 @@
-package org.example.orderservice.kafka;
+package org.example.orderservice.kafkaConsumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

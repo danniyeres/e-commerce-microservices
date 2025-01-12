@@ -1,10 +1,10 @@
 package org.example.orderservice.service;
 
-import org.example.cartservice.model.Cart;
-import org.example.cartservice.model.CartItem;
-import org.example.orderservice.feignClient.CartClient;
+import org.example.orderservice.model.Cart;
+import org.example.orderservice.model.CartItem;
 import org.example.orderservice.model.Order;
 import org.example.orderservice.model.OrderItem;
+import org.example.orderservice.repository.CartRepository;
 import org.example.orderservice.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,15 @@ import java.util.List;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final CartClient cartClient;
+    private final CartRepository cartRepository;
 
-    public OrderService(OrderRepository orderRepository, CartClient cartClient) {
+    public OrderService(OrderRepository orderRepository, CartRepository cartRepository) {
         this.orderRepository = orderRepository;
-        this.cartClient = cartClient;
+        this.cartRepository = cartRepository;
     }
 
     public Order createOrder(Long userId) {
-        Cart cart = cartClient.getCartByUserId(userId);
+        Cart cart = cartRepository.findByUserId(userId);
         if (cart == null || cart.getItems().isEmpty()) {
             throw new RuntimeException("Cart is empty");
         }
@@ -36,7 +36,7 @@ public class OrderService {
             items.add(orderItem);
         }
 
-        double totalPrice = cartClient.getCartByUserId(userId).getTotalPrice();
+        double totalPrice = cartRepository.findByUserId(userId).getTotalPrice();
 
         Order order = Order.builder()
                 .userId(userId)

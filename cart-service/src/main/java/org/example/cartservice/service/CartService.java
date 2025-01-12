@@ -1,6 +1,8 @@
 package org.example.cartservice.service;
 
 
+import org.example.cartservice.dto.CartDto;
+import org.example.cartservice.kafkaProduser.CartProducer;
 import org.example.cartservice.model.Cart;
 import org.example.cartservice.model.Product;
 import org.example.cartservice.repository.CartRepository;
@@ -10,11 +12,12 @@ import org.springframework.stereotype.Service;
 public class CartService {
     private final CartRepository cartRepository;
     private final ProductService productService;
+    private final CartProducer cartProducer;
 
-
-    public CartService(CartRepository cartRepository, ProductService productService) {
+    public CartService(CartRepository cartRepository, ProductService productService, CartProducer cartProducer) {
         this.cartRepository = cartRepository;
         this.productService = productService;
+        this.cartProducer = cartProducer;
     }
 
     public Cart getCartByUserId(Long userId) {
@@ -36,8 +39,9 @@ public class CartService {
             cart = new Cart();
             cart.setUserId(userId);
         }
-
         cart.addItem(productId, quantity, product.getPrice());
+
+        sendCartToOrderService(userId);
         return cartRepository.save(cart);
     }
 
@@ -47,6 +51,7 @@ public class CartService {
         }
         Cart cart = cartRepository.findByUserId(userId);
         cart.removeItem(productId);
+        sendCartToOrderService(userId);
         cartRepository.save(cart);
     }
 
@@ -56,6 +61,15 @@ public class CartService {
         }
         Cart cart = cartRepository.findByUserId(userId);
         cart.clearCart();
+        sendCartToOrderService(userId);
         cartRepository.save(cart);
+    }
+
+    public void sendCartToOrderService(Long userId) {
+        if (!cartRepository.existsByUserId(userId)) {
+            throw new RuntimeException("Cart not found");
+        }
+        Cart cart = cartRepository.findByUserId(userId);
+        cartProducer.sendCartEvent(cart);
     }
 }
