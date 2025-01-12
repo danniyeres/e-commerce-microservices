@@ -2,20 +2,19 @@ package org.example.cartservice.service;
 
 
 import org.example.cartservice.model.Cart;
-import org.example.cartservice.feignClient.ProductClient;
+import org.example.cartservice.model.Product;
 import org.example.cartservice.repository.CartRepository;
-import org.example.productservice.model.Product;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CartService {
     private final CartRepository cartRepository;
-    private final ProductClient productClient;
+    private final ProductService productService;
 
 
-    public CartService(CartRepository cartRepository, ProductClient productClient) {
+    public CartService(CartRepository cartRepository, ProductService productService) {
         this.cartRepository = cartRepository;
-        this.productClient = productClient;
+        this.productService = productService;
     }
 
     public Cart getCartByUserId(Long userId) {
@@ -27,7 +26,7 @@ public class CartService {
 
     public Cart addItemToCart(Long userId, Long productId, int quantity) {
 
-        Product product = productClient.getProductById(productId);
+        Product product = productService.getProductById(productId);
         if (product == null) {
             throw new RuntimeException("Product not found");
         }

@@ -24,12 +24,6 @@ public class PaymentStatusListener {
         try {
             log.info("Received payment status: {}", message);
 
-            if (message.startsWith("\"") && message.endsWith("\"")) {
-                message = message.substring(1, message.length() - 1).replace("\\\"", "\"");
-            }
-
-            log.info("Received payment status: {}", message);
-
             PaymentStatusMessage paymentStatusMessage = objectMapper.readValue(message, PaymentStatusMessage.class);
 
             if (paymentStatusMessage.getStatus().equals("SUCCESS")) {

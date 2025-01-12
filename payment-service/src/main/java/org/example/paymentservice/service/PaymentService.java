@@ -43,8 +43,7 @@ public class PaymentService {
         PaymentStatusMessage message = new PaymentStatusMessage(
                 payment.getOrderId(), payment.getId(),  payment.getPaymentStatus().name()
         );
-
-        paymentProducer.sendPaymentStatus("payment-status", message);
+        paymentProducer.sendPaymentStatus( message);
 
         return payment;
     }

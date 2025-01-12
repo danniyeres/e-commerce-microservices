@@ -12,6 +12,11 @@ spring:
       hibernate:
           ddl-auto: update
       show-sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: cart-service-group
+      auto-offset-reset: earliest
 
 eureka:
     client:
