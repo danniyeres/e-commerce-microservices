@@ -1,12 +1,10 @@
 package org.example.userservice.controller;
 
-
 import org.example.userservice.model.User;
 import org.example.userservice.service.AuthService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/auth")

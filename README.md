@@ -36,10 +36,10 @@ This project is a microservices-based application built with Java, Spring Boot, 
 3. **Access the services**:
     - Gateway Service: `http://localhost:8080`
     - Eureka Server: `http://localhost:8761`
-    - User Service: `http://localhost:8083`
-    - Product Service: `http://localhost:8081`
-    - Cart Service: `http://localhost:8084`
-    - Order Service: `http://localhost:8082`
+    - User Service: `http://localhost:8081`
+    - Product Service: `http://localhost:8082`
+    - Cart Service: `http://localhost:8083`
+    - Order Service: `http://localhost:8084`
     - Payment Service: `http://localhost:8085`
     - Kafka: `http://localhost:9092`
     - Zookeeper: `http://localhost:2181`
